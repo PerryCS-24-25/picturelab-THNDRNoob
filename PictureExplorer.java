@@ -153,6 +153,12 @@ private JMenuItem twoHundred;
  */
 private JMenuItem fiveHundred;
 
+private JMenu filtersMenu;
+private JMenuItem seperateColor;
+private JMenuItem invertColor;
+private JMenuItem grayscaleColor;
+private JMenuItem bwColor;
+
 /**
  * The picture being explored
  */
@@ -245,6 +251,13 @@ private void setUpMenuBar() {
     openFile = new JMenuItem("Open");
     saveFile = new JMenuItem("Save");
     closeFile = new JMenuItem("Close");
+
+    filtersMenu = new JMenu("Filter");
+    seperateColor = new JMenuItem("Separate Colors");
+    invertColor = new JMenuItem("Invert Colors");
+    grayscaleColor = new JMenuItem("Grayscale");
+    bwColor = new JMenuItem("Black and White");
+
     zoomMenu = new JMenu("Zoom");
     twentyFive = new JMenuItem("25%");
     fifty = new JMenuItem("50%");
@@ -266,11 +279,20 @@ private void setUpMenuBar() {
     hundredFifty.addActionListener(this);
     twoHundred.addActionListener(this);
     fiveHundred.addActionListener(this);
+    seperateColor.addActionListener(this);
+    invertColor.addActionListener(this);
+    grayscaleColor.addActionListener(this);
+    bwColor.addActionListener(this);
 
     // add the menu items to the menus
     fileMenu.add(openFile);
     fileMenu.add(saveFile);
     fileMenu.add(closeFile);
+
+    filtersMenu.add(seperateColor);
+    filtersMenu.add(invertColor);
+    filtersMenu.add(grayscaleColor);
+    filtersMenu.add(bwColor);
 
     zoomMenu.add(twentyFive);
     zoomMenu.add(fifty);
@@ -281,6 +303,7 @@ private void setUpMenuBar() {
     zoomMenu.add(fiveHundred);
     menuBar.add(fileMenu);
     menuBar.add(zoomMenu);
+    menuBar.add(filtersMenu);
 
     // set the menu bar to this menu
     pictureFrame.setJMenuBar(menuBar);
@@ -329,6 +352,36 @@ private void createWindow() {
  */
 public void actionPerformed(ActionEvent a) {
 
+    if (a.getActionCommand().equals(seperateColor.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.keepOnlyBlue();
+        newPic.explore();
+        newPic = new Picture((SimplePicture)picture);
+        newPic.keepOnlyGreen();
+        newPic.explore();
+        newPic = new Picture((SimplePicture)picture);
+        newPic.keepOnlyRed();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(grayscaleColor.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.grayscale();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(invertColor.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.negate();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(bwColor.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.blackandwhite();
+        newPic.explore();
+    }
+
     if (a.getActionCommand().equals(closeFile.getActionCommand())) { 
         pictureFrame.dispose();
     }
@@ -340,6 +393,7 @@ public void actionPerformed(ActionEvent a) {
     if (a.getActionCommand().equals(openFile.getActionCommand())) { 
         this.picture = FileChooser.showOpenDialog(pictureFrame);
         if (this.picture != null){
+            pictureFrame.dispose();
             this.picture.explore();
         }
     }

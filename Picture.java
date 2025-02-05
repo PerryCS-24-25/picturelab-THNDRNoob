@@ -203,6 +203,26 @@ public class Picture extends SimplePicture {
         }
     }
 
+    public void blackandwhite() {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                int avg = (pixelObj.getBlue() + pixelObj.getRed() + pixelObj.getGreen()) / 3;
+
+                if (avg > 127){
+                pixelObj.setBlue(255);
+                pixelObj.setRed(255);
+                pixelObj.setGreen(255);
+                }
+                else{
+                    pixelObj.setBlue(0);
+                pixelObj.setRed(0);
+                pixelObj.setGreen(0);
+                }
+            }
+        }
+    }
+
     public int getLowestRed() {
         Pixel[][] pixels = this.getPixels2D();
         int lowest = 255;
