@@ -65,6 +65,42 @@ public class PictureTester {
         temple2.explore();
     }
 
+    public static void testKeepOnlyBlue() {
+        Picture temple = new Picture("temple.jpg");
+        temple.keepOnlyBlue();
+        temple.explore();
+    }
+    
+    public static void testKeepOnlyRed() {
+        Picture temple = new Picture("temple.jpg");
+        temple.keepOnlyRed();
+        temple.explore();
+    }
+
+    public static void testKeepOnlyGreen() {
+        Picture temple = new Picture("temple.jpg");
+        temple.keepOnlyGreen();
+        temple.explore();
+    }
+
+    public static void testNegate() {
+        Picture temple = new Picture("temple.jpg");
+        temple.negate();
+        temple.explore();
+    }
+
+    public static void testGrayscale() {
+        Picture temple = new Picture("temple.jpg");
+        temple.grayscale();
+        temple.explore();
+    }
+
+    public static void testFixUnderwater() {
+        Picture water = new Picture("water.jpg");
+        water.fixUnderwater();
+        water.explore();
+    }
+
     /**
      * Main method for testing. Every class can have a main method in Java
      */
@@ -75,13 +111,13 @@ public class PictureTester {
 
         //testExplorer();
         //testScale();
-        testZeroBlue();
+        //testZeroBlue();
         //testKeepOnlyBlue();
         //testKeepOnlyRed();
         //testKeepOnlyGreen();
         //testNegate();
         //testGrayscale();
-        //testFixUnderwater();
+        testFixUnderwater();
         //testMirrorVertical();
         //testMirrorTemple();
         //testMirrorArms();

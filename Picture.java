@@ -184,9 +184,128 @@ public class Picture extends SimplePicture {
         Pixel[][] pixels = this.getPixels2D();
         for (Pixel[] rowArray : pixels) {
             for (Pixel pixelObj : rowArray) {
-                pixelObj.setBlue(0);
-                pixelObj.setRed(0);
-                pixelObj.setGreen(0);
+                pixelObj.setBlue(255 - pixelObj.getBlue());
+                pixelObj.setRed(255 - pixelObj.getRed());
+                pixelObj.setGreen(255 - pixelObj.getGreen());
+            }
+        }
+    }
+
+    public void grayscale() {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                int avg = (pixelObj.getBlue() + pixelObj.getRed() + pixelObj.getGreen()) / 3;
+                pixelObj.setBlue(avg);
+                pixelObj.setRed(avg);
+                pixelObj.setGreen(avg);
+            }
+        }
+    }
+
+    public int getLowestRed() {
+        Pixel[][] pixels = this.getPixels2D();
+        int lowest = 255;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getRed() < lowest){
+                    lowest = pixelObj.getRed();
+                }
+            }
+        }
+
+        return lowest;
+    }
+
+    public int getHighestRed() {
+        Pixel[][] pixels = this.getPixels2D();
+        int highest = 0;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getRed() > highest){
+                    highest = pixelObj.getRed();
+                }
+            }
+        }
+
+        return highest;
+    }
+
+    public int getLowestBlue() {
+        Pixel[][] pixels = this.getPixels2D();
+        int lowest = 255;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getBlue() < lowest){
+                    lowest = pixelObj.getBlue();
+                }
+            }
+        }
+
+        return lowest;
+    }
+
+    public int getHighestBlue() {
+        Pixel[][] pixels = this.getPixels2D();
+        int highest = 0;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getBlue() > highest){
+                    highest = pixelObj.getBlue();
+                }
+            }
+        }
+
+        return highest;
+    }
+
+    public int getLowestGreen() {
+        Pixel[][] pixels = this.getPixels2D();
+        int lowest = 255;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getGreen() < lowest){
+                    lowest = pixelObj.getGreen();
+                }
+            }
+        }
+
+        return lowest;
+    }
+
+    public int getHighestGreen() {
+        Pixel[][] pixels = this.getPixels2D();
+        int highest = 0;
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                if (pixelObj.getGreen() > highest){
+                    highest = pixelObj.getGreen();
+                }
+            }
+        }
+
+        return highest;
+    }
+
+    public void fixUnderwater() {
+        Pixel[][] pixels = this.getPixels2D();
+        int highestR = getHighestRed();
+        int lowestR = getLowestRed();
+        int scaleR = 255 / (highestR - lowestR);
+
+        int highestB = getHighestBlue();
+        int lowestB = getLowestBlue();
+        int scaleB = 255 / (highestB - lowestB);
+
+        int highestG = getHighestGreen();
+        int lowestG = getLowestGreen();
+        int scaleG = 255 / (highestG - lowestG);
+
+        for (Pixel[] rowArray : pixels) {
+            for (Pixel pixelObj : rowArray) {
+                pixelObj.setRed((pixelObj.getRed() - lowestR) * scaleR);
+                pixelObj.setBlue((pixelObj.getBlue() - lowestB) * scaleB);
+                pixelObj.setGreen((pixelObj.getGreen()- lowestG) * scaleG);
             }
         }
     }
