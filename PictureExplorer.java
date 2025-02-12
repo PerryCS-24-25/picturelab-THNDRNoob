@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.management.JMException;
 import javax.swing.*;
 import java.awt.image.*;
 import javax.swing.border.*;
@@ -158,6 +160,10 @@ private JMenuItem seperateColor;
 private JMenuItem invertColor;
 private JMenuItem grayscaleColor;
 private JMenuItem bwColor;
+private JMenuItem mirrorTTB;
+private JMenuItem mirrorRTL;
+private JMenuItem mirrorBTT;
+private JMenuItem mirrorLTR;
 
 /**
  * The picture being explored
@@ -258,6 +264,11 @@ private void setUpMenuBar() {
     grayscaleColor = new JMenuItem("Grayscale");
     bwColor = new JMenuItem("Black and White");
 
+    mirrorBTT = new JMenuItem("Mirror Bottom to Top");
+    mirrorTTB = new JMenuItem("Mirror Top to Bottom");
+    mirrorLTR = new JMenuItem("Mirror Left to Right");
+    mirrorRTL = new JMenuItem("Mirror Right to Left");
+
     zoomMenu = new JMenu("Zoom");
     twentyFive = new JMenuItem("25%");
     fifty = new JMenuItem("50%");
@@ -283,6 +294,10 @@ private void setUpMenuBar() {
     invertColor.addActionListener(this);
     grayscaleColor.addActionListener(this);
     bwColor.addActionListener(this);
+    mirrorBTT.addActionListener(this);
+    mirrorTTB.addActionListener(this);
+    mirrorLTR.addActionListener(this);
+    mirrorRTL.addActionListener(this);
 
     // add the menu items to the menus
     fileMenu.add(openFile);
@@ -293,6 +308,11 @@ private void setUpMenuBar() {
     filtersMenu.add(invertColor);
     filtersMenu.add(grayscaleColor);
     filtersMenu.add(bwColor);
+
+    filtersMenu.add(mirrorTTB);
+    filtersMenu.add(mirrorRTL);
+    filtersMenu.add(mirrorBTT);
+    filtersMenu.add(mirrorLTR);
 
     zoomMenu.add(twentyFive);
     zoomMenu.add(fifty);
@@ -361,6 +381,30 @@ public void actionPerformed(ActionEvent a) {
         newPic.explore();
         newPic = new Picture((SimplePicture)picture);
         newPic.keepOnlyRed();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(mirrorTTB.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.mirrorHorizontal();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(mirrorBTT.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.mirrorHorizontalBotToTop();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(mirrorLTR.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.mirrorVertical();
+        newPic.explore();
+    }
+
+    if (a.getActionCommand().equals(mirrorRTL.getActionCommand())) { 
+        Picture newPic = new Picture((SimplePicture)picture);
+        newPic.mirrorVerticalRightToLeft();
         newPic.explore();
     }
 
